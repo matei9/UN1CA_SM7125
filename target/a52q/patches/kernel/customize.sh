@@ -28,7 +28,7 @@ if [ -f "$TMP_DIR/out/kernel" ]; then
     LOG "- Replacing kernel image"
     curl -L -s -o "$TMP_DIR/kernel.zip" "$KERNEL_ZIP"
     unzip -q -j "$TMP_DIR/kernel.zip" "Image.gz" -d "$TMP_DIR/out"
-    cat "$TMP_DIR/out/Image.gz" | gzip -d > "$TMP_DIR/out/tmp" && mv -f "$TMP_DIR/out/tmp" "$WORK_DIR/out/kernel"
+    cat "$TMP_DIR/out/Image.gz" | gzip -d > "$TMP_DIR/out/tmp" && mv -f "$TMP_DIR/out/tmp" "$TMP_DIR/out/kernel"
     rm "$TMP_DIR/kernel.zip"
     PATCHED=true
 fi
