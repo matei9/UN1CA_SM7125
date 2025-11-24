@@ -22,7 +22,7 @@ if [[ "$(LC_ALL=C file -b "$TMP_DIR/out/kernel")" != "Linux kernel ARM64"* ]]; t
 fi
 
 PATCHED=false
-KERNEL_ZIP="https://github.com/matei9/kernel_build_sm7125/releases/download/init/valeryn_230702_a52q-kaihatsu.zip"
+KERNEL_ZIP="https://github.com/matei9/kernel_build_sm7125/releases/download/ksu/valeryn-a52q-ksu-susfs-20251123-2228.zip"
 
 if [ -f "$TMP_DIR/out/kernel" ]; then
     LOG "- Replacing kernel image"
