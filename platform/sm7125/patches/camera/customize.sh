@@ -41,3 +41,13 @@ LOG_STEP_IN "- Patch camera public libraries"
     echo "libSceneDetector_v1.camera.samsung.so"
 } >> "$WORK_DIR/system/system/etc/public.libraries-camera.samsung.txt"
 LOG_STEP_OUT
+
+LOG_STEP_IN "- Replace midas config files with a73xqxx"
+DELETE_FROM_WORK_DIR "vendor" "etc/midas"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/midas" 0 2000 755 "u:object_r:vendor_configs_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Replace singletake config files with a73xqxx"
+DELETE_FROM_WORK_DIR "vendor" "etc/singletake"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/singletake" 0 2000 755 "u:object_r:vendor_configs_file:s0"
+LOG_STEP_OUT
