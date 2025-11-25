@@ -10,6 +10,7 @@ ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/android.hardware.memtrack@1.0-service
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/vendor.display.color@1.0-service" 0 2000 755 "u:object_r:vendor_hal_display_color_default_exec:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/vendor.qti.hardware.display.composer-service" 0 2000 755 "u:object_r:hal_graphics_composer_default_exec:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/init/vendor.qti.hardware.display.composer-service.rc" 0 0 644 "u:object_r:vendor_configs_file:s0"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/snapdragon_color_libs_config.xml" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "etc/vintf/manifest/vendor.qti.hardware.display.composer-service.xml" 0 0 644 "u:object_r:vendor_configs_file:s0"
 
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libdisp-aba.so" 0 0 644 "u:object_r:vendor_configs_file:s0"

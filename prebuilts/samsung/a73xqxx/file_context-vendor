@@ -27,8 +27,7 @@
 /vendor/etc/singletake/ClarityScorer/ClarityScorer\.tflite u:object_r:vendor_configs_file:s0
 /vendor/etc/singletake/SmartCrop u:object_r:vendor_configs_file:s0
 /vendor/etc/singletake/SmartCrop/SmartCrop\.tflite u:object_r:vendor_configs_file:s0
-<<<<<<< HEAD
-=======
+/vendor/etc/snapdragon_color_libs_config\.xml u:object_r:vendor_configs_file:s0
 /vendor/etc/vintf u:object_r:vendor_configs_file:s0
 /vendor/etc/vintf/manifest u:object_r:vendor_configs_file:s0
 /vendor/etc/vintf/manifest/vendor\.qti\.hardware\.display\.composer-service\.xml u:object_r:vendor_configs_file:s0
