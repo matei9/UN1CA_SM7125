@@ -10,4 +10,4 @@ LOG "- Adding \"ro.surface_flinger.set_touch_timer_ms\" prop with \"$TOUCH_TIMER
 EVAL "sed -i \"/set_idle_timer_ms/a ro.surface_flinger.set_touch_timer_ms=$TOUCH_TIMER_MS\" \"$WORK_DIR/vendor/default.prop\""
 SET_PROP "vendor" "ro.surface_flinger.enable_frame_rate_override" "true"
 
-unset IDLE_TIMER_MS TOUCH_TIMER_MS
+unset IDLE_TIMER_MS TOUCH_TIMER_MS DISPLAY_POWER_TIMER_MS
