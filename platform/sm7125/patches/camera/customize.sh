@@ -32,3 +32,12 @@ ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libtensorflowLite.myfi
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libtensorflowlite_inference_api.myfilter.camera.samsung.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libveengine.arcsoft.so" 0 0 644 "u:object_r:system_lib_file:s0"
 LOG_STEP_OUT
+
+LOG_STEP_IN "- Patch camera public libraries"
+{
+    echo "libtensorflowLite.myfilter.camera.samsung.so"
+    echo "libtensorflowlite_inference_api.myfilter.camera.samsung.so"
+    echo "libcolor_engine.camera.samsung.so"
+    echo "libSceneDetector_v1.camera.samsung.so"
+} >> "$WORK_DIR/system/system/etc/public.libraries-camera.samsung.txt"
+LOG_STEP_OUT
