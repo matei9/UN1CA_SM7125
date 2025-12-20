@@ -50,6 +50,7 @@
 /vendor/lib64/libqdMetaData\.so u:object_r:same_process_hal_file:s0
 /vendor/lib64/libqdcm-mode-parser\.so u:object_r:vendor_file:s0
 /vendor/lib64/libqdutils\.so u:object_r:same_process_hal_file:s0
+/vendor/lib64/libqrtrclient\.so u:object_r:vendor_file:s0
 /vendor/lib64/libqseed3\.so u:object_r:vendor_file:s0
 /vendor/lib64/libqservice\.so u:object_r:same_process_hal_file:s0
 /vendor/lib64/libsdedrm\.so u:object_r:vendor_file:s0
