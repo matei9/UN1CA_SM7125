@@ -28,6 +28,7 @@ ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libhistogram.so" 0 0 644 "u:object_r:v
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqdMetaData.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqdcm-mode-parser.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqdutils.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqrtrclient.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqseed3.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libqservice.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/libsdedrm.so" 0 0 644 "u:object_r:vendor_configs_file:s0"
