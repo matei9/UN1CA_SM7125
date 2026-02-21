@@ -11,7 +11,7 @@ MKBOOTIMG_ARGS="$(unpack_bootimg --boot_img "$TMP_DIR/boot.img" --out "$TMP_DIR/
 [ ! -f "$TMP_DIR/out/kernel" ] && ABORT "Failed to extract boot.img\n\n$MKBOOTIMG_ARGS"
 
 PATCHED=false
-KERNEL_ZIP="https://github.com/matei9/kernel_build_sm7125/releases/download/un1ca/valeryn_20260129_a52q-seishiki.zip"
+KERNEL_ZIP="https://github.com/matei9/kernel_build_sm7125/releases/download/un1ca-update/valeryn_210730_a52q-seishiki.zip"
 
 if [ -f "$TMP_DIR/out/kernel" ]; then
     LOG "- Replacing kernel with Valeryn kernel"
