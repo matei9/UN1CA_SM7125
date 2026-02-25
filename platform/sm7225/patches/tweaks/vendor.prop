@@ -1,2 +1,5 @@
 # Audio tweaks
 vendor.audio.offload.buffer.size.kb=256
+
+# Disable HeatMapThread logspam
+persist.log.tag.HeatmapThread=S
