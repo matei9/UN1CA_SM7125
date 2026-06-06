@@ -11,10 +11,10 @@ MKBOOTIMG_ARGS="$(unpack_bootimg --boot_img "$TMP_DIR/boot.img" --out "$TMP_DIR/
 [ ! -f "$TMP_DIR/out/kernel" ] && ABORT "Failed to extract boot.img\n\n$MKBOOTIMG_ARGS"
 
 PATCHED=false
-KERNEL_ZIP="https://github.com/matei9/samsung_android_kernel_a52xq/releases/download/un1ca-release1/TouchGrass-a52xq-20260427.zip"
+KERNEL_ZIP="https://github.com/matei9/samsung_android_kernel_a52xq/releases/download/un1ca-update/TouchGrass-a52xq-20260502.zip"
 
 if [ -f "$TMP_DIR/out/kernel" ]; then
-    LOG "- Replacing kernel with Valeryn kernel"
+    LOG "- Replacing kernel with TouchGrass kernel"
     curl -L -s -o "$TMP_DIR/kernel.zip" "$KERNEL_ZIP"
     unzip -q -j "$TMP_DIR/kernel.zip" "Image.gz" -d "$TMP_DIR/out" && rm "$TMP_DIR/kernel.zip"
     mv "$TMP_DIR/out/Image.gz" "$TMP_DIR/out/kernel"
