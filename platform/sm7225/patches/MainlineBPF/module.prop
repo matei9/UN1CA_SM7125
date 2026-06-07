@@ -1,0 +1,4 @@
+id=mainlinebpf
+name=Mainline BPF Fix
+author=pritam, testamic2
+description=Adding Mainline BPF Fix to stop bootlooping when doing GPSU.
