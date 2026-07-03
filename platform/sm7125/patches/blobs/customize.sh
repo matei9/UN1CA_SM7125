@@ -1,0 +1,60 @@
+LOG_STEP_IN "- Adding Google Hotword Enrollment blobs from a73xqxx"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx6_WIDEBAND_SMALL"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentYGoogleEx6_WIDEBAND_SMALL"
+ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding FM radio blobs from stock"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/etc/permissions/privapp-permissions-com.sec.android.app.fm.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/etc/sysconfig/preinstalled-packages-com.sec.android.app.fm.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/priv-app/HybridRadio/HybridRadio.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib/libfmradio_jni.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/lib64/libfmradio_jni.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/fm_helium.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/libbeluga.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/libfm-hci.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/vendor.qti.hardware.fm@1.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/fm_helium.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/libbeluga.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/libfm-hci.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/vendor.qti.hardware.fm@1.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding 32-bit WFD libs from r9qxxx"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/bin/insthk" 0 2000 755 "u:object_r:insthk_exec:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/bin/remotedisplay" 0 2000 755 "u:object_r:remotedisplay_exec:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/libhdcp2.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/libremotedisplay_wfd.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/libremotedisplayservice.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/libsecuibc.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/libstagefright_hdcp.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/wfd_log.so" 0 0 644 "u:object_r:system_lib_file:s0"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libhdcp_client_aidl.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libhdcp2.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libremotedisplay_wfd.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libremotedisplayservice.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libsecuibc.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/libstagefright_hdcp.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/vendor.samsung.hardware.security.hdcp.wifidisplay-V2-ndk.so"
+DELETE_FROM_WORK_DIR "system" "system/lib64/wfd_log.so"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding penguin libs from stock"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/libpenguin.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib/libpenguin_impl.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/libpenguin.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "lib64/libpenguin_impl.so" 0 0 644 "u:object_r:system_lib_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Fix SEPolicy"
+DELETE_FROM_WORK_DIR "system_ext" "etc/selinux/mapping/30.0.cil"
+ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "etc/selinux/mapping/30.0.cil" 0 0 644 "u:object_r:sepolicy_file:s0"
+LOG_STEP_OUT
+
+#LOG_STEP_IN "- Fix iccc crashes"
+#DELETE_FROM_WORK_DIR "vendor" "etc/init/iccc@1.0-service.rc"
+#DELETE_FROM_WORK_DIR "vendor" "etc/init/vendor.samsung.hardware.tlc.iccc@1.0-service.rc"
+#DELETE_FROM_WORK_DIR "vendor" "bin/hw/vendor.samsung.hardware.tlc.iccc@1.0-service"
+#DELETE_FROM_WORK_DIR "vendor" "etc/vintf/manifest/vendor.samsung.hardware.tlc.iccc@1.0-manifest.xml"
+#LOG_STEP_OUT

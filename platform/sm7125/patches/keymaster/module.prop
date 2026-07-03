@@ -1,0 +1,4 @@
+id=keymaster
+name=keymaster_fix
+author=testamic2
+description=Fixes Keystore crashes.
