@@ -18,6 +18,9 @@ SMALI_PATCH "system" "system/framework/services.jar" \
     '-$$Nest$smisDisabled()Z' \
     'true'
 
+# Fix CE Unlock
+cp $SRC_DIR/unica/patches/miscs/StorageManagerService\$StorageManagerInternalImpl.smali "$APKTOOL_DIR/system/framework/services.jar/smali/com/android/server/StorageManagerService\$StorageManagerInternalImpl.smali"
+
 # Better model detection in FreecessController
 SMALI_PATCH "system" "system/framework/services.jar" \
     "smali/com/android/server/am/FreecessController.smali" "replace" \
