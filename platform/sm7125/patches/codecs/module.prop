@@ -1,0 +1,4 @@
+id=codec
+name=Fix C2 codec crashing.
+author=testamic2
+description=fix C2 crashing and OMX fallback.
