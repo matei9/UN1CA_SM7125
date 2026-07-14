@@ -26,7 +26,7 @@ The goal is to deliver a fast, smooth and modern UX while offering additional to
 Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
 
 # Features:
-- Based on the latest stable Galaxy A36 firmware
+- Based on the latest stable Galaxy S23 FE (QCOM) firmware
 - EROFS powered
 - Galaxy AI support
   - Audio eraser
@@ -85,6 +85,4 @@ A special thanks goes to the following for their invaluable contributions in no 
 - **[Valeryn](https://github.com/frostg-012)** for his inital platform and target trees for SM7125.
 - **[tsn](https://github.com/tisenu100)** for his desixtification patch from LegacyUI.
 - **[Wallsthetix](https://t.me/Wallsthetix)** for making this amazing banner for the ROM.
-
-# Stargazers over time
-[![Stargazers over time](https://starchart.cc/salvogiangri/UN1CA.svg)](https://starchart.cc/salvogiangri/UN1CA)
+- **[Rares](https://github.com/Rares6567)** for suggesting the ROM's codename. (Synapse)
