@@ -26,10 +26,10 @@ SOURCE_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$SOURCE_FIRMWARE")_$(cut -d "/" 
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 
 LIBSTAGEFRIGHT="$WORK_DIR/system/system/lib64/libstagefright.so"
-LIBSTAGEFRIGHT_FREAD512="2100805202408052e30315aae41f8052f6c30191808c0594"
-LIBSTAGEFRIGHT_FREAD254="21008052c21f8052e30315aae41f8052f6c30191808c0594"
+LIBSTAGEFRIGHT_FREAD512="2100805202408052e30315aae41f8052f6c30191908c0594"
+LIBSTAGEFRIGHT_FREAD254="21008052c21f8052e30315aae41f8052f6c30191908c0594"
 
-# Match libstagefright-sdk37-fread254.so: A36 ACodec::reconfigEncoder4OtherApps
+# Match libstagefright-sdk37-fread254.so: S23FE ACodec::reconfigEncoder4OtherApps
 # reads /proc/<pid>/cmdline with 0xfe bytes instead of 0x200 to avoid Android 16
 # FORTIFY aborts while starting AVC video recording.
 if xxd -p -c 0 "$LIBSTAGEFRIGHT" 2> /dev/null | grep -q "$LIBSTAGEFRIGHT_FREAD254"; then
@@ -80,8 +80,8 @@ LOG_STEP_OUT
 # Samsung Camera "hal3_mass-phone-release" app flavor
 if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
     if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        ADD_TO_WORK_DIR "$SOURCE_EXTRA_FIRMWARES" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "$SOURCE_EXTRA_FIRMWARES" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
+        ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
     fi
 else
     if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
@@ -104,7 +104,7 @@ fi
 # Single take "stp1-release" app flavor
 if grep -q "SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS.*true" "$FW_DIR/$SOURCE_FIRMWARE_PATH/system/system/cameradata/camera-feature.xml" 2> /dev/null && \
         ! grep -q "SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS.*true" "$WORK_DIR/system/system/cameradata/camera-feature.xml" 2> /dev/null; then
-    ADD_TO_WORK_DIR "$SOURCE_EXTRA_FIRMWARES" "system" "system/priv-app/SingleTakeService/SingleTakeService.apk" 0 0 644 "u:object_r:system_file:s0"
+    ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/priv-app/SingleTakeService/SingleTakeService.apk" 0 0 644 "u:object_r:system_file:s0"
 elif ! grep -q "SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS.*true" "$FW_DIR/$SOURCE_FIRMWARE_PATH/system/system/cameradata/camera-feature.xml" 2> /dev/null && \
         grep -q "SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS.*true" "$WORK_DIR/system/system/cameradata/camera-feature.xml" 2> /dev/null; then
     # TODO handle this condition
