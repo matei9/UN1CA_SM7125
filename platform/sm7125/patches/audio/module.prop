@@ -1,0 +1,4 @@
+id=audio
+name=Audio patches
+author=testamic2
+description=Audio configuration patches for deep-buffer playback support.
