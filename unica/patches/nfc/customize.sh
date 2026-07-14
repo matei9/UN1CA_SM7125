@@ -1,3 +1,4 @@
+SOURCE_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$SOURCE_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$SOURCE_FIRMWARE")"
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 
 if [ -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/libnfc-nci.conf" ]; then
@@ -26,6 +27,15 @@ fi
 if [ "$(GET_PROP "vendor" "ro.vendor.nfc.feature.chipname")" ] && \
         ! [[ "$(GET_PROP "vendor" "ro.vendor.nfc.feature.chipname")" =~ NXP_SN100U|SLSI|STM_ST21 ]]; then
     ABORT "Unknown NFC chip name: $(GET_PROP "vendor" "ro.vendor.nfc.feature.chipname")"
+fi
+
+# Ensure SEC_PRODUCT_FEATURE_NFC_CONFIG_ANTENNA_POSITION matches ro.vendor.nfc.info.antpos
+# - Source firmware Settings APK validates these values match
+SOURCE_ANTPOS="$(GET_PROP "$FW_DIR/$SOURCE_FIRMWARE_PATH/vendor/build.prop" "ro.vendor.nfc.info.antpos")"
+TARGET_ANTPOS="$(GET_PROP "vendor" "ro.vendor.nfc.info.antpos")"
+if [ "$SOURCE_ANTPOS" != "$TARGET_ANTPOS" ] && [ "$SOURCE_ANTPOS" ]; then
+    LOG "- Setting \"ro.vendor.nfc.info.antpos\" to \"$SOURCE_ANTPOS\" (was \"$TARGET_ANTPOS\") in /vendor/build.prop"
+    SET_PROP "vendor" "ro.vendor.nfc.info.antpos" "$SOURCE_ANTPOS"
 fi
 
 # SEC_PRODUCT_FEATURE_NFC_CHIP_NAME:=NXP_SN100U
@@ -119,4 +129,4 @@ elif [ -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/lib64/libnfc_sec_jni.so" 
     fi
 fi
 
-unset TARGET_FIRMWARE_PATH
+unset SOURCE_FIRMWARE_PATH TARGET_FIRMWARE_PATH
