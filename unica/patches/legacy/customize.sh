@@ -245,6 +245,15 @@ if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
     fi
 fi
 
+# Remove incompatible GPU BPF programs
+# - Source firmware gpuMem.bpf/gpuWork.bpf require GPU tracepoints not present on target kernel
+# - BpfLoader fails to load them, but libmeminfo.so still tries to read the map and calls abort()
+if [ -f "$WORK_DIR/system/system/etc/bpf/gpuMem.bpf" ] || [ -f "$WORK_DIR/system/system/etc/bpf/gpuWork.bpf" ]; then
+    PATCHED=true
+    DELETE_FROM_WORK_DIR "system" "system/etc/bpf/gpuMem.bpf"
+    DELETE_FROM_WORK_DIR "system" "system/etc/bpf/gpuWork.bpf"
+fi
+
 # Support legacy usb_notify kernel drivers (pre-API 36)
 # https://github.com/salvogiangri/UN1CA/discussions/519
 # - Check for 'SKY_DEFAULT' to determine if newer usb_notify drivers are in place
