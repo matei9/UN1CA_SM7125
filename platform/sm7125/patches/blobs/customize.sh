@@ -5,6 +5,10 @@ ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGO
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 LOG_STEP_OUT
 
+LOG_STEP_IN "- Adding wpa_supplicant from a73xqxx"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/wpa_supplicant"
+LOG_STEP_OUT
+
 LOG_STEP_IN "- Adding light blobs from source"
 ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "bin/hw/vendor.samsung.hardware.light-service"
 ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "lib64/vendor.samsung.hardware.light-V1-ndk_platform.so"
