@@ -1,6 +1,6 @@
 LOG_STEP_IN "- Adding Google Hotword Enrollment blobs from a73xqxx"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx6_WIDEBAND_SMALL"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentYGoogleEx6_WIDEBAND_SMALL"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentOKGoogleEx4HEXAGON"
+DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx4HEXAGON"
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 LOG_STEP_OUT
@@ -56,5 +56,21 @@ LOG_STEP_OUT
 LOG_STEP_IN "- Fix SEPolicy"
 DELETE_FROM_WORK_DIR "system_ext" "etc/selinux/mapping/30.0.cil"
 ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system_ext" "etc/selinux/mapping/30.0.cil" 0 0 644 "u:object_r:sepolicy_file:s0"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Hex-patch libmeminfo.so to prevent abort on GPU BPF map mismatch"
+# abortOnMismatch calls __libcpp_verbose_abort which kills system_server
+# Replace all 5 abort calls (bl -> ret) in abortOnMismatch function
+# Workaround getGpuTotalUsageKb() abort on missing GPU BPF maps (from a36q).
+HEX_PATCH "$WORK_DIR/system/system/lib64/libmeminfo.so" "bf2303d5c0035fd63227009431270094" "bf2303d5c0035fd6c0035fd6c0035fd6"
+HEX_PATCH "$WORK_DIR/system/system/lib64/libmeminfo.so" "e80b8052080000b92d270094e2250094" "e80b8052080000b9c0035fd6e2250094"
+HEX_PATCH "$WORK_DIR/system/system/lib64/libmeminfo.so" "e80b8052080000b929270094de250094" "e80b8052080000b9c0035fd6de250094"
+HEX_PATCH "$WORK_DIR/system/system/lib64/libmeminfo.so" "e80b8052080000b9252700943f2303d5" "e80b8052080000b9c0035fd63f2303d5"
+LOG_STEP_OUT
+
+LOG_STEP_IN "- Hex-patch libandroid_runtime.so to bypass GPU BPF stats"
+# getGpuTotalUsageKb -> ReadProcessGpuUsageKb -> opens BPF map -> fdsan abort
+# Replace getGpuTotalUsageKb with: mov x0, #0; ret (return 0, skip GPU stats)
+HEX_PATCH "$WORK_DIR/system/system/lib64/libandroid_runtime.so" "ff8300d1fd7b01a9fd430091e0230091ff0700f951fe0394" "000080d2c0035fd6fd430091e0230091ff0700f951fe0394"
 LOG_STEP_OUT
 
