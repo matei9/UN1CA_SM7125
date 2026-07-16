@@ -31,3 +31,6 @@ SEC_FLOATING_FEATURE_SAIV_CONFIG_AI_REVITAL_VERSION=1.7,1
 
 #AOD Clock transition
 SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_AOD_ITEM=aodversion=7,clocktransition,activeclock=4
+
+# Camera VENDOR_LIB_INFO - match S23FE for post-processing compatibility
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO=beauty.samsung.v4,face_landmark.arcsoft.v2_1,facial_attribute.samsung.v1,swuwdc.arcsoft.v1,event_detection.samsung.v2,food.samsung.v1,selfie_correction.samsung.v1,dual_bokeh.samsung.v1,single_bokeh.samsung.v2,image_enhance.arcsoft.v1,scene_detection.samsung.v1,smart_scan.samsung.v2,mfhdr.arcsoft.v1,llhdr.arcsoft.v1,human_tracking.arcsoft.v2_1,localtm.samsung.v1_1,image_codec.samsung.v2,super_night.mpi.v2,super_resolution_raw.arcsoft.v1,fr_tracking.arcsoft.v1,aebhdr.arcsoft.v1,hybridhdr.arcsoft.v1,pro_single_rgb.mpi.v1,fusion_high_res.arcsoft.v1,facial_restoration.arcsoft.v1
