@@ -27,3 +27,8 @@ SMALI_PATCH "system" "system/framework/services.jar" \
     '<clinit>()V' \
     'ro.product.model' \
     'ro.product.vendor.model'
+
+# Set build ID
+VALUE="$(GET_PROP "$WORK_DIR/system/system/build.prop" "ro.build.display.id")"
+SET_PROP "system" "ro.build.display.id" "TestaROM $ROM_CODENAME $ROM_VERSION - $TARGET_CODENAME ($VALUE)"
+
