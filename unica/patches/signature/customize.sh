@@ -15,4 +15,10 @@ SMALI_PATCH "system" "system/framework/services.jar" \
     "$CERT_SIGNATURE" \
     > /dev/null
 
+SMALI_PATCH "system" "system/framework/services.jar" \
+    "smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali" "return" \
+    'canJoinSharedUserId(Ljava/lang/String;Landroid/content/pm/SigningDetails;Lcom/android/server/pm/SharedUserSetting;I)Z' \
+    'true' \
+    > /dev/null
+
 unset CERT_PREFIX CERT_SIGNATURE

@@ -1,0 +1,4 @@
+id=i18n
+name=Internationalization locale patch
+author=testamic2
+description=Merges missing locale resources from EUX firmware into source APKs.
