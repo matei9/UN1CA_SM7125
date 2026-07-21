@@ -5,6 +5,10 @@ ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentOKGoogleEx3HEXAGO
 ADD_TO_WORK_DIR "a73xqxx" "product" "priv-app/HotwordEnrollmentXGoogleEx3HEXAGON" 0 0 755 "u:object_r:system_file:s0"
 LOG_STEP_OUT
 
+LOG_STEP_IN "- Adding wpa_supplicant from a73xqxx"
+ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/wpa_supplicant"
+LOG_STEP_OUT
+
 LOG_STEP_IN "- Adding 32-bit WFD libs from r9qxxx"
 ADD_TO_WORK_DIR "r9qxxx" "system" "system/bin/insthk" 0 2000 755 "u:object_r:insthk_exec:s0"
 ADD_TO_WORK_DIR "r9qxxx" "system" "system/bin/remotedisplay" 0 2000 755 "u:object_r:remotedisplay_exec:s0"
