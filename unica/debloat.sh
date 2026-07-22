@@ -348,3 +348,8 @@ system/lib64/libC2paDps.camera.samsung.so
 PRODUCT_DEBLOAT+="
 app/YouTube
 "
+
+# SwiftKey Keyboard
+SYSTEM_DEBLOAT+="
+system/priv-app/SwiftkeyIme
+"
