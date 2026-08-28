@@ -56,7 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+        target: [a52q]
 
     steps:
       - name: Checkout repo
@@ -131,5 +131,12 @@ jobs:
       - name: Extract stock firmwares
         run: ./scripts/extract_fw.sh
 
-      - name: Build ROM
-        run: ./scripts/make_rom.sh
+      - name: Build ROM (Full ZIP)
+        run: ./scripts/make_rom.sh -z
+
+      - name: Upload to GoFile
+        run: |
+          ZIP_FILE=$(find out -maxdepth 1 -type f -name "UN1CA*.zip" | head -n 1)
+          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" -F "token=${{ secrets.GOFILE_TOKEN }}" -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" "https://upload-eu-par.gofile.io/uploadFile")
+          echo "Download link:"
+          echo "$RESPONSE" | jq -r '.data.downloadPage'
