@@ -1,4 +1,4 @@
 id=dvfs
 name=DVFS patches
-author=ata-kaner
+author=ata-kaner, pascua28
 description=Various DVFS-related patches.
