@@ -52,7 +52,9 @@ fi
 
 if [[ "$SOURCE_SECURITY_CONFIG_ESE_CHIP_VENDOR" != "none" ]] && [[ "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" != "none" ]]; then
     if [[ "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" != "$TARGET_SECURITY_CONFIG_ESE_COS_NAME" ]]; then
-        if [[ "$TARGET_SECURITY_CONFIG_ESE_CHIP_VENDOR" == "MULTI" ]]; then
+        if [[ "$TARGET_SECURITY_CONFIG_ESE_COS_NAME" == "none" ]]; then
+            SET_PROP "system" "ro.security.ese.cosname.default" --delete
+        elif [[ "$TARGET_SECURITY_CONFIG_ESE_CHIP_VENDOR" == "MULTI" ]]; then
             GEMALTO_COS_NAME="${TARGET_SECURITY_CONFIG_ESE_COS_NAME%%_*}"
             NXP_COS_NAME="${TARGET_SECURITY_CONFIG_ESE_COS_NAME#*_}"
 
@@ -67,20 +69,6 @@ if [[ "$SOURCE_SECURITY_CONFIG_ESE_CHIP_VENDOR" != "none" ]] && [[ "$SOURCE_SECU
             SET_PROP "system" "ro.security.ese.cosname.default" "$TARGET_SECURITY_CONFIG_ESE_COS_NAME"
         fi
     fi
-    if [[ "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" != "$TARGET_SECURITY_CONFIG_ESE_COS_NAME" ]]; then
-        SMALI_PATCH "system" "system/app/SecureElement/SecureElement.apk" \
-            "smali/com/android/se/internal/UtilExtension.smali" "replace" \
-            "<clinit>()V" \
-            "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" \
-            "${TARGET_SECURITY_CONFIG_ESE_COS_NAME//none/}"
-    fi
-    if [[ "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" != "$TARGET_SECURITY_CONFIG_ESE_COS_NAME" ]]; then
-        SMALI_PATCH "system" "system/app/SecureElement/SecureElement.apk" \
-            "smali/com/android/se/internal/UtilExtension.smali" "replace" \
-            "supportEse(Landroid/content/Context;)Z" \
-            "eSE_COS: $SOURCE_SECURITY_CONFIG_ESE_COS_NAME" \
-            "eSE_COS: ${TARGET_SECURITY_CONFIG_ESE_COS_NAME//none/}"
-    fi
     if [[ "$SOURCE_SECURITY_CONFIG_ESE_CHIP_VENDOR" != "$TARGET_SECURITY_CONFIG_ESE_CHIP_VENDOR" ]]; then
         SMALI_PATCH "system" "system/app/SecureElement/SecureElement.apk" \
             "smali/com/android/se/internal/UtilExtension.smali" "replace" \
@@ -89,9 +77,10 @@ if [[ "$SOURCE_SECURITY_CONFIG_ESE_CHIP_VENDOR" != "none" ]] && [[ "$SOURCE_SECU
             "eSE_Vendor: ${TARGET_SECURITY_CONFIG_ESE_CHIP_VENDOR//none/}"
     fi
     if [[ "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" != "$TARGET_SECURITY_CONFIG_ESE_COS_NAME" ]]; then
+        # One pass also handles the initializer and log strings without depending on their methods.
         SMALI_PATCH "system" "system/app/SecureElement/SecureElement.apk" \
             "smali/com/android/se/internal/UtilExtension.smali" "replaceall" \
-            "$SOURCE_SECURITY_CONFIG_ESE_COS_NAME" \
+            "${SOURCE_SECURITY_CONFIG_ESE_COS_NAME//./\\.}" \
             "${TARGET_SECURITY_CONFIG_ESE_COS_NAME//none/}"
     fi
     if [[ "$SOURCE_SECURITY_CONFIG_ESE_CHIP_VENDOR" != "$TARGET_SECURITY_CONFIG_ESE_CHIP_VENDOR" ]]; then
