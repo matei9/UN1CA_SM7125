@@ -3,6 +3,8 @@ From: Salvo Giangreco <giangrecosalvo9@gmail.com>
 Date: Wed, 2 Sep 2026 14:40:46 +0200
 Subject: [PATCH] Restore SM7125 TABoostController
 
+For the original One UI 8 SDHMS layout.
+
 ---
  smali/Q1/n1.smali |  4 ----
  smali/U1/w.smali  |  2 +-
@@ -72,4 +74,3 @@ index ed7f9d9..16cdf19 100644
  
 -- 
 2.55.0
-
