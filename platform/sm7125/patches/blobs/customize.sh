@@ -30,10 +30,13 @@ if [ "$SOURCE_PLATFORM_SDK_VERSION" -lt "37" ]; then
     ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib64/libhwui.so" 0 0 644 "u:object_r:system_lib_file:s0"
 fi
 
-LOG_STEP_IN "- Adding HIDL face biometrics libs"
-ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/android.hardware.biometrics.face@1.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
-ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/vendor.samsung.hardware.biometrics.face@2.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
-LOG_STEP_OUT
+# One UI 9 uses its own framework face libraries.
+if [ "$SOURCE_PLATFORM_SDK_VERSION" -lt "37" ]; then
+    LOG_STEP_IN "- Adding HIDL face biometrics libs"
+    ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/android.hardware.biometrics.face@1.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
+    ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/vendor.samsung.hardware.biometrics.face@2.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
+    LOG_STEP_OUT
+fi
 
 LOG_STEP_IN "- Adding keymaster 4.0 libs"
 ADD_TO_WORK_DIR "r9qxxx" "system" "system/lib/android.hardware.keymaster@3.0.so" 0 0 644 "u:object_r:system_lib_file:s0"
