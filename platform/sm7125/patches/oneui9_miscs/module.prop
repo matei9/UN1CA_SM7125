@@ -1,0 +1,4 @@
+id=oneui9_miscs
+name=One UI 9 misc patches
+author=pascua28
+description=Restores stock ueventd rules.
