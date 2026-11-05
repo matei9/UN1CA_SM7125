@@ -16,17 +16,29 @@ elif [[ "$SOURCE_PLATFORM_SDK_VERSION" == "$TARGET_PLATFORM_SDK_VERSION" ]]; the
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/etc/vintf/manifest.xml"
 fi
 
-EVAL "
-sed -i '/<name>android.hardware.media.c2<\/name>/i\\
-    <hal format=\"hidl\">\\
-        <name>android.hardware.keymaster</name>\\
-        <version>4.0</version>\\
-        <interface>\\
-            <name>IKeymasterDevice</name>\\
-            <instance>strongbox</instance>\\
-        </interface>\\
-    </hal>' \
-    \"$WORK_DIR/system/system/etc/vintf/compatibility_matrix.device.xml\"
-"
+python3 - "$WORK_DIR/system/system/etc/vintf/compatibility_matrix.device.xml" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+path = Path(sys.argv[1])
+xml = path.read_text()
+root = ET.fromstring(xml)
+keymaster = root.findall("./hal[@format='hidl'][name='android.hardware.keymaster']")
+if not any("4.0" in [version.text for version in hal.findall("version")] and
+           hal.find("./interface[name='IKeymasterDevice'][instance='strongbox']") is not None
+           for hal in keymaster):
+    entry = """    <hal format="hidl">
+        <name>android.hardware.keymaster</name>
+        <version>4.0</version>
+        <interface>
+            <name>IKeymasterDevice</name>
+            <instance>strongbox</instance>
+        </interface>
+    </hal>
+"""
+    start, end = xml.rsplit("</compatibility-matrix>", 1)
+    path.write_text(f"{start.rstrip()}\n{entry}</compatibility-matrix>{end}")
+PY
 
 unset -f _LOG
