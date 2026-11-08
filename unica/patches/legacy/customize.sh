@@ -150,7 +150,8 @@ if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
 fi
 
 # Android 17 defaults to AIDL gnss. Remove to use HIDL one.
-if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "34" ]; then
+# The SM7125 Android 14 vendors also use the HIDL GNSS HAL.
+if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "34" ] || [[ "$TARGET_PLATFORM" == "sm7125" ]]; then
     DELETE_FROM_WORK_DIR "system_ext" "etc/init/loc_sys_service.rc"
     DELETE_FROM_WORK_DIR "system_ext" "bin/loc_sys_service"
 fi
