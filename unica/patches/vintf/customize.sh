@@ -9,12 +9,17 @@ else
     _LOG "File not found: $SRC_DIR/target/$TARGET_CODENAME/vintf/compatibility_matrix.device.xml"
 fi
 
-if [ -f "$SRC_DIR/target/$TARGET_CODENAME/vintf/manifest.xml" ]; then
+FRAMEWORK_MANIFEST="$SRC_DIR/target/$TARGET_CODENAME/vintf/manifest.xml"
+if [ ! -f "$FRAMEWORK_MANIFEST" ]; then
+    FRAMEWORK_MANIFEST="$SRC_DIR/platform/$TARGET_PLATFORM/vintf/manifest.xml"
+fi
+if [ -f "$FRAMEWORK_MANIFEST" ]; then
     LOG "- Adding /system/system/etc/vintf/manifest.xml"
-    EVAL "cp -a \"$SRC_DIR/target/$TARGET_CODENAME/vintf/manifest.xml\" \"$WORK_DIR/system/system/etc/vintf/manifest.xml\""
+    EVAL "cp -a \"$FRAMEWORK_MANIFEST\" \"$WORK_DIR/system/system/etc/vintf/manifest.xml\""
 elif [[ "$SOURCE_PLATFORM_SDK_VERSION" == "$TARGET_PLATFORM_SDK_VERSION" ]]; then
     ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/etc/vintf/manifest.xml"
 fi
+unset FRAMEWORK_MANIFEST
 
 python3 - "$WORK_DIR/system/system/etc/vintf/compatibility_matrix.device.xml" <<'PY'
 import sys
