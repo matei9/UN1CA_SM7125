@@ -1,4 +1,4 @@
 id=oneui9_blobs
 name=One UI 9 blobs
 author=pascua28
-description=Updates legacy face and light HALs.
+description=Updates legacy face and light HALs and provides optical fingerprint SystemUI.

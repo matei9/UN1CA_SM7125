@@ -60,3 +60,7 @@ if [ ! -f "$WORK_DIR/vendor/bin/hw/vendor.samsung.hardware.light-service" ]; the
     ADD_TO_WORK_DIR "a73xqxx" "vendor" "bin/hw/vendor.samsung.hardware.light-service"
     ADD_TO_WORK_DIR "a73xqxx" "vendor" "lib64/vendor.samsung.hardware.light-V1-ndk_platform.so"
 fi
+
+LOG_STEP_IN "- Adding a36xqnaxx SystemUI for optical fingerprint support"
+ADD_TO_WORK_DIR "a36xqnaxx" "system_ext" "priv-app/SystemUI/SystemUI.apk" 0 0 644 "u:object_r:system_file:s0"
+LOG_STEP_OUT
