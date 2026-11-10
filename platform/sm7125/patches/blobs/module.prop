@@ -1,4 +1,4 @@
 id=blobs
 name=Blobs
 author=salvogiangri
-description=Replaces source blobs with target-compatible ones.
+description=Replaces source blobs with target-compatible ones, including One UI 9 optical fingerprint SystemUI.
