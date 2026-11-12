@@ -1,4 +1,4 @@
 id=oneui9_miscs
 name=One UI 9 misc patches
 author=pascua28
-description=Restores stock ueventd rules and keeps the compatible hotspot overlay.
+description=Restores stock ueventd rules, keeps the compatible hotspot overlay, and configures ART.

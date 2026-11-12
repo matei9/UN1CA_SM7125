@@ -1,0 +1,4 @@
+# Perform dex compilation early
+pm.dexopt.boot-after-ota=speed-profile
+pm.dexopt.first-boot=speed-profile
+pm.dexopt.post-boot=verify

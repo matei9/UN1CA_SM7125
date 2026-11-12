@@ -1,0 +1,2 @@
+# Valeryn backports the userfaultfd minor-fault support used by ART.
+ro.dalvik.vm.enable_uffd_gc=true
