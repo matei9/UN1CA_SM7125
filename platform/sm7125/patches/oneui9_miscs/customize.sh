@@ -5,3 +5,8 @@ if [ -f "$WORK_DIR/vendor/ueventd.rc" ] && [ -f "$UEVENTD" ] &&
     sed -i '1i import /vendor/ueventd.rc' "$UEVENTD"
 fi
 unset UEVENTD
+
+if [ -d "$WORK_DIR/product/overlay/SoftapOverlay" ] &&
+        [ -f "$WORK_DIR/vendor/overlay/SoftapOverlay/SoftapOverlay.apk" ]; then
+    DELETE_FROM_WORK_DIR "product" "overlay/SoftapOverlay"
+fi
