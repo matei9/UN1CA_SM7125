@@ -44,3 +44,7 @@ etc/permissions/privapp-permissions-com.qualcomm.location.xml
 framework/com.qti.location.sdk.jar
 priv-app/com.qualcomm.location
 "
+
+if [ "$SOURCE_PLATFORM_SDK_VERSION" -ge "37" ]; then
+    source "$SRC_DIR/platform/sm7125/debloat_oneui9.sh"
+fi
