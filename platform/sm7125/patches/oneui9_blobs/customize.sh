@@ -63,4 +63,6 @@ fi
 
 LOG_STEP_IN "- Adding a36xqnaxx SystemUI for optical fingerprint support"
 ADD_TO_WORK_DIR "a36xqnaxx" "system_ext" "priv-app/SystemUI/SystemUI.apk" 0 0 644 "u:object_r:system_file:s0"
+DECODE_APK "system_ext" "priv-app/SystemUI/SystemUI.apk"
+cp "$MODPATH/rounded.xml" "$APKTOOL_DIR/system_ext/priv-app/SystemUI/SystemUI.apk/res/drawable/rounded.xml"
 LOG_STEP_OUT
