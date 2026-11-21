@@ -134,9 +134,17 @@ if [[ "$SOURCE_PRODUCT_SHIPPING_API_LEVEL" != "$TARGET_PRODUCT_SHIPPING_API_LEVE
         > /dev/null
 fi
 
+# product_feature adjusts this constructor to the target's shipping API before
+# deknox removes the HDM block. Match the value installed by that module.
+mkdir -p "$TMP_DIR"
+HDM_PATCH="$(mktemp "$TMP_DIR/hdm-services.XXXXXX.patch")"
+sed "s/^-    const-string v0, \"29\"$/-    const-string v0, \"$TARGET_PRODUCT_SHIPPING_API_LEVEL\"/" \
+    "$MODPATH/hdm/services.jar/0001-Nuke-Knox-HDM.patch" > "$HDM_PATCH"
+APPLY_PATCH "system" "system/framework/services.jar" "$HDM_PATCH"
+rm -f "$HDM_PATCH"
+unset HDM_PATCH
+
 # TODO nuke HdmVendorController.smali
-APPLY_PATCH "system" "system/framework/services.jar" \
-    "$MODPATH/hdm/services.jar/0001-Nuke-Knox-HDM.patch"
 SMALI_PATCH "system" "system/framework/services.jar" \
     'smali/com/android/server/enterprise/hdm/HdmVendorController.smali' "replacebody" \
     'parseDeviceResponse(ILjava/lang/String;[B)[B' \
