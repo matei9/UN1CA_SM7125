@@ -57,7 +57,6 @@
 
     <overheatcontrol>
         <complex>
-            <MW     formula="AP*BAT*PA" temp="555.420.520" />
             <LTB    formula="AP*BAT*PA" temp="555.420.520" />
             <LCD    formula="AP*BAT*PA" temp="535.400.500" />
             <GDM    formula="AP*BAT*PA" temp="480.412.470" />
