@@ -114,8 +114,12 @@ SMALI_PATCH()
         return 0
     fi
 
-    # Check if provided method is method and exists inside smali
-    if ! grep "^\.method.*" "$FILE_PATH/$SMALI" | grep -q -F -- "$METHOD" "$FILE_PATH/$SMALI"; then
+    # replaceall has no method argument. Check declarations in one pass so
+    # large smali files do not fail when grep's upstream process gets SIGPIPE.
+    if [[ "$OPERATION" != "replaceall" ]] && ! awk -v method="$METHOD" '
+        /^\.method[[:space:]]/ && index($0, method) { found = 1; exit }
+        END { exit !found }
+    ' "$FILE_PATH/$SMALI"; then
         LOGE "Method \"$METHOD\" not found in /$PARTITION/$FILE/$SMALI"
 
         local MATCHES
