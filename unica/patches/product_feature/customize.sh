@@ -623,8 +623,13 @@ if $SOURCE_LCD_SUPPORT_MDNIE_HW && [[ "$SOURCE_LCD_CONFIG_COLOR_WEAKNESS_SOLUTIO
             APPLY_PATCH "system" "system/framework/framework.jar" \
                 "$MODPATH/mdnie/hw/framework.jar/0002-Disable-A11Y_COLOR_BOOL_SUPPORT_DMC_COLORWEAKNESS.patch"
         fi
-        APPLY_PATCH "system" "system/framework/services.jar" \
-            "$MODPATH/mdnie/hw/services.jar/0001-Disable-HW-mDNIe.patch"
+        # The SM7125 targets use the One UI 9 framework's software accessibility path.
+        # Do not apply the One UI 8 services patch, which rewrites unrelated
+        # display and screen-curtain code that changed on the S23 base.
+        if [[ "$TARGET_PLATFORM" != "sm7125" || "$SOURCE_PLATFORM_SDK_VERSION" != "37" ]]; then
+            APPLY_PATCH "system" "system/framework/services.jar" \
+                "$MODPATH/mdnie/hw/services.jar/0001-Disable-HW-mDNIe.patch"
+        fi
     fi
 elif $SOURCE_LCD_SUPPORT_MDNIE_HW && [[ "$SOURCE_LCD_CONFIG_COLOR_WEAKNESS_SOLUTION" == "0" ]]; then
     # TODO handle these conditions
