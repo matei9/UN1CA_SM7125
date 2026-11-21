@@ -1,0 +1,14 @@
+From: Salvo Giangreco <giangrecosalvo9@gmail.com>
+Subject: [PATCH] Enable Wi-Fi Sharing Lite after the One UI 9 concurrency patch
+
+diff --git a/smali/com/samsung/android/server/wifi/ap/SemWifiApChipInfo.smali b/smali/com/samsung/android/server/wifi/ap/SemWifiApChipInfo.smali
+--- a/smali/com/samsung/android/server/wifi/ap/SemWifiApChipInfo.smali
++++ b/smali/com/samsung/android/server/wifi/ap/SemWifiApChipInfo.smali
+@@ -685,3 +685,6 @@
+     iput-boolean v5, p0, Lcom/samsung/android/server/wifi/ap/SemWifiApChipInfo;->mSupportPowerSave:Z
+-
++
++    # The SM7125 targets request Lite sharing; keep the donor's later model checks intact.
++    sput-boolean v5, Lcom/samsung/android/server/wifi/ap/SemWifiApChipInfo;->mSupportWifiSharingLite:Z
++
+     invoke-virtual {p0}, Lcom/samsung/android/server/wifi/ap/SemWifiApChipInfo;->isKoreaModelForWifiSharingLite()Z

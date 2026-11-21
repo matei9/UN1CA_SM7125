@@ -1114,7 +1114,11 @@ fi
 if ! $SOURCE_WLAN_SUPPORT_MOBILEAP_WIFISHARING_LITE; then
     if $TARGET_WLAN_SUPPORT_MOBILEAP_WIFISHARING_LITE; then
         # Check for target flag instead as we've already took care of this SPF above
-        if ! $TARGET_WLAN_SUPPORT_MOBILEAP_POWER_SAVEMODE; then
+        if [[ "$TARGET_PLATFORM" == "sm7125" && "$SOURCE_PLATFORM_SDK_VERSION" == "37" ]] &&
+                ! $TARGET_WLAN_SUPPORT_MOBILEAP_POWER_SAVEMODE; then
+            APPLY_PATCH "system" "system/framework/semwifi-service.jar" \
+                "$MODPATH/wifi/power_savemode/semwifi-service.jar/0003-Enable-MOBILEAP-WIFISHARING-LITE-One-UI-9.patch"
+        elif ! $TARGET_WLAN_SUPPORT_MOBILEAP_POWER_SAVEMODE; then
             APPLY_PATCH "system" "system/framework/semwifi-service.jar" \
                 "$MODPATH/wifi/power_savemode/semwifi-service.jar/0003-Enable-MOBILEAP_WIFISHARING_LITE-support.patch"
         else
