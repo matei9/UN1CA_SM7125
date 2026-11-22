@@ -66,9 +66,10 @@ if [ -f "$WORK_DIR/system/system/priv-app/KmxService/KmxService.apk" ]; then
         -path '*/com/samsung/android/kmxservice/fabrickeystore/keystore/cert/IntegrityStatus.smali' -printf '%P\n' -quit)"
     KMX_TRUSTCHAIN_STATUS="$(find "$KMX_APK" -type f \
         -path '*/com/samsung/android/kmxservice/sdk/trustchain/util/IntegrityStatus.smali' -printf '%P\n' -quit)"
-    [ "$KMX_COMMON_ROT" ] && [ "$KMX_FABRIC_ROT" ] && [ "$KMX_TRUSTCHAIN_ROT" ] && \
-        [ "$KMX_COMMON_STATUS" ] && [ "$KMX_FABRIC_STATUS" ] && [ "$KMX_TRUSTCHAIN_STATUS" ] || \
+    if [ -z "$KMX_COMMON_ROT" ] || [ -z "$KMX_FABRIC_ROT" ] || [ -z "$KMX_TRUSTCHAIN_ROT" ] ||
+            [ -z "$KMX_COMMON_STATUS" ] || [ -z "$KMX_FABRIC_STATUS" ] || [ -z "$KMX_TRUSTCHAIN_STATUS" ]; then
         ABORT "Knox Matrix integrity classes not found"
+    fi
     SMALI_PATCH "system" "system/priv-app/KmxService/KmxService.apk" \
         "$KMX_COMMON_ROT" "return" \
         'getVerifiedBootState()I' '0'
