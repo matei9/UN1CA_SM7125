@@ -312,6 +312,11 @@ if [[ "$SOURCE_FINGERPRINT_CONFIG_SENSOR" != "$TARGET_FINGERPRINT_CONFIG_SENSOR"
 
                 ADD_TO_WORK_DIR "a36xqnaxx" "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" 0 0 644 "u:object_r:system_file:s0"
 
+                if [[ "$TARGET_PLATFORM" == "sm7125" ]]; then
+                    APPLY_PATCH "system" "system/priv-app/BiometricSetting/BiometricSetting.apk" \
+                        "$MODPATH/fingerprint/optical_fod/BiometricSetting.apk/0002-Restore-legacy-face-enrollment-preview.patch"
+                fi
+
                 APPLY_PATCH "system" "system/framework/framework.jar" \
                     "$MODPATH/fingerprint/optical_fod/framework.jar/0001-Add-optical-FOD-support.patch"
                 APPLY_PATCH "system" "system/framework/services.jar" \
