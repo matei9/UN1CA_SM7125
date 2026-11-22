@@ -78,12 +78,21 @@ jobs:
 
       - name: Set up build environment
         run: |
-          sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq \
             attr ccache clang ffmpeg libbrotli-dev libbz2-dev \
             libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
-            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp
-          sudo modprobe erofs f2fs
+            libzstd-dev lld protobuf-compiler webp
+          if ! sudo modprobe -aq erofs f2fs; then
+            kernel_release="$(uname -r)"
+            # Newer AWS kernels ship these filesystems in linux-modules.
+            module_package="linux-modules-extra-$kernel_release"
+            if ! apt-cache show "$module_package" >/dev/null 2>&1; then
+              module_package="linux-modules-$kernel_release"
+            fi
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq "$module_package"
+            sudo modprobe -a erofs f2fs
+          fi
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/unica_platform.pk8
