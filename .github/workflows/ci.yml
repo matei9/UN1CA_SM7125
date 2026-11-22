@@ -5,7 +5,7 @@ on:
   pull_request:
   push:
     branches:
-      - 'sixteen'
+      - 'seventeen'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,35 +28,15 @@ jobs:
           done < <(find platform scripts target unica -name "*.sh" -not -name "*ssi.sh" -not -name "config.sh" -not -name "sff.sh")
           exit $CODE
 
-  generate-matrix:
-    name: Generate matrix
-    needs: shellcheck
-    runs-on: ubuntu-24.04
-
-    outputs:
-      matrix: ${{ steps.generate-matrix.outputs.matrix }}
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v7
-
-      - name: Generate CI matrix
-        id: generate-matrix
-        run: |
-          matrix="$(find target -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
-            | sort | jq -R -s -c 'split("\n") | map(select(length > 0))')"
-          echo "$matrix"
-          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
-
   build:
     name: Build
-    needs: [shellcheck, generate-matrix]
+    needs: shellcheck
     runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
       matrix:
-        target: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+        target: [a52q, a72q]
 
     steps:
       - name: Checkout repo
@@ -82,12 +62,21 @@ jobs:
 
       - name: Set up build environment
         run: |
-          sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq \
             attr ccache clang ffmpeg libbrotli-dev libbz2-dev \
             libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
-            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp
-          sudo modprobe erofs f2fs
+            libzstd-dev lld patchelf protobuf-compiler webp
+          if ! sudo modprobe -aq erofs f2fs; then
+            kernel_release="$(uname -r)"
+            # Newer AWS kernels ship these filesystems in linux-modules.
+            module_package="linux-modules-extra-$kernel_release"
+            if ! apt-cache show "$module_package" >/dev/null 2>&1; then
+              module_package="linux-modules-$kernel_release"
+            fi
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq "$module_package"
+            sudo modprobe -a erofs f2fs
+          fi
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/unica_platform.pk8
@@ -131,5 +120,12 @@ jobs:
       - name: Extract stock firmwares
         run: ./scripts/extract_fw.sh
 
-      - name: Build ROM
-        run: ./scripts/make_rom.sh
+      - name: Build ROM (Full ZIP)
+        run: ./scripts/make_rom.sh -z
+        
+      - name: Upload to GoFile
+        run: |
+          ZIP_FILE=$(find out -maxdepth 1 -type f -name "UN1CA*.zip" | head -n 1)
+          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" -F "token=${{ secrets.GOFILE_TOKEN }}" -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" "https://upload-eu-par.gofile.io/uploadFile")
+          echo "Download link:"
+          echo "$RESPONSE" | jq -r '.data.downloadPage'
