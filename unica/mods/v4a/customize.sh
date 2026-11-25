@@ -47,7 +47,7 @@ done <<< "$(find "$WORK_DIR/system/system/preload")"
 
 rm -f "$WORK_DIR/system/system/etc/vpl_apks_count_list.txt"
 while read -r i; do
-    FILE="$(echo "$i" | sed "s.$WORK_DIR/system..")"
+    FILE="${i#"$WORK_DIR/system"}"
     echo "$FILE" >> "$WORK_DIR/system/system/etc/vpl_apks_count_list.txt"
 done <<< "$(find "$WORK_DIR/system/system/preload" -name "*.apk" | sort)"
 
