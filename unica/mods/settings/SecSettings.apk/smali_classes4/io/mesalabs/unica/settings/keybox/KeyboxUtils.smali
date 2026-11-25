@@ -4,6 +4,8 @@
 
 
 # static fields
+.field private static final GOOGLE_RKP_ROOT_PUBLIC_KEY:Ljava/lang/String; = "MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEI9ojcU7fPlsFCjxy6IRqzgeOoK0b+YsV9FPQywiyw8EQRTkJ9u3qwfnI4DGoSLlBqClTXJfgfCcZvs60FikNMHnu4fkRzObfgDkU2KNXezT9/RQ+XvNslxPHrHCowhGr"
+
 .field private static final GOOGLE_ROOT_PUBLIC_KEY:Ljava/lang/String; = "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAr7bHgiuxpwHsK7Qui8xUFmOr75gvMsd/dTEDDJdSSxtf6An7xyqpRR90PL2abxM1dEqlXnf2tqw1Ne4Xwl5jlRfdnJLmN0pTy/4lj4/7tv0Sk3iiKkypnEUtR6WfMgH0QZfKHM1+di+y9TFRtv6y//0rb+T+W8a9nsNL/ggjnar86461qO0rOs2cXjp3kOG1FEJ5MVmFmBGtnrKpa73XpXyTqRxB/M0n1n/W9nGqC4FSYa04T6N5RIZGBN2z2MT5IKGbFlbC8UrW0DxW7AYImQQcHtGl/m00QLVWutHQoVJYnFPlXTcHYvASLu+RhhsbDmxMgJJ0mcDpvsC4PjvB+TxywElgS70vE0XmLD+OJtvsBslHZvPBKCOdT0MS+tgSOIfga+z1Z1g7+DVagf7quvmag8jfPioyKvxnK/EgsTUVi2ghzq8wm27ud/mIM7AY2qEORR8Go3TVB4HzWQgpZrt3i5MIlCaY504LzSRiigHCzAPlHws+W0rB5N+er5/2pJKnfBSDiCiFAVtCLOZ7gLiMm0jhO2B6tUXHI/+MRPjy02i59lINMRRev56GKtcd9qO/0kUJWdZTdA2XoS82ixPvZtXQpUpuL12ab+9EaDK8Z4RHJYYfCT3Q5vNAXaiWQ+8PTWm2QgBR/bkwSWc+NpUFgNPN9PvQi8WEg5UmAGMCAwEAAQ=="
 
 .field private static final REVOCATION_LIST_URL:Ljava/lang/String; = "https://android.googleapis.com/attestation/status"
@@ -503,557 +505,397 @@
 .end method
 
 .method private static validateXml(Landroid/content/Context;Ljava/lang/String;)Z
-    .locals 22
+    .locals 12
 
-    move-object/from16 v1, p0
+    const/4 v0, 0x2
+
+    const/4 v1, 0x0
+
+    :try_start_2
+    invoke-static {}, Lorg/xmlpull/v1/XmlPullParserFactory;->newInstance()Lorg/xmlpull/v1/XmlPullParserFactory;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lorg/xmlpull/v1/XmlPullParserFactory;->newPullParser()Lorg/xmlpull/v1/XmlPullParser;
+
+    move-result-object v2
+
+    new-instance v3, Ljava/io/StringReader;
+
+    invoke-direct {v3, p1}, Ljava/io/StringReader;-><init>(Ljava/lang/String;)V
+
+    invoke-interface {v2, v3}, Lorg/xmlpull/v1/XmlPullParser;->setInput(Ljava/io/Reader;)V
+
+
+
+    new-instance p1, Ljava/util/ArrayList;
+
+    invoke-direct {p1}, Ljava/util/ArrayList;-><init>()V
+
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->getEventType()I
+
+    move-result v3
+    :try_end_1d
+    .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_1d} :catch_b7
+
+    const/4 v4, -0x1
+
+    move v6, v1
+
+    move v5, v4
+
+    :goto_20
+    const/4 v7, 0x3
+
+    const/4 v8, 0x1
+
+    if-eq v3, v8, :cond_ad
+
+    const-string v8, "Key"
+
+    if-ne v3, v0, :cond_8f
+
+    :try_start_28
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
+
+    move-result-object v3
+
+    const-string v9, "NumberOfKeyboxes"
+
+    invoke-virtual {v3, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v9
+    :try_end_32
+    .catch Ljava/lang/Exception; {:try_start_28 .. :try_end_32} :catch_b7
+
+    if-eqz v9, :cond_46
+
+    :try_start_34
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->nextText()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {v3}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+
+    move-result v3
+    :try_end_40
+    .catch Ljava/lang/NumberFormatException; {:try_start_34 .. :try_end_40} :catch_42
+    .catch Ljava/lang/Exception; {:try_start_34 .. :try_end_40} :catch_b7
+
+    move v5, v3
+
+    goto :goto_8e
+
+    :catch_42
+    move-exception v3
+
+
+    move v5, v4
+
+    goto :goto_8e
+
+    :cond_46
+    :try_start_46
+    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v8
+
+    if-eqz v8, :cond_52
+
+    new-instance p1, Ljava/util/ArrayList;
+
+    invoke-direct {p1}, Ljava/util/ArrayList;-><init>()V
+
+    goto :goto_8e
+
+    :cond_52
+    const-string v8, "PrivateKey"
+
+    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v8
+    :try_end_58
+    .catch Ljava/lang/Exception; {:try_start_46 .. :try_end_58} :catch_b7
+
+    const-string v9, "format"
+
+    const/4 v10, 0x0
+
+    const-string v11, "pem"
+
+    if-eqz v8, :cond_6d
+
+    :try_start_5f
+    invoke-interface {v2, v10, v9}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v11, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_8e
+
+    invoke-static {p0, v7}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
+
+    return v1
+
+    :cond_6d
+    const-string v8, "Certificate"
+
+    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_8e
+
+    invoke-interface {v2, v10, v9}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v11, v3}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
+
+    move-result v3
+
+    if-nez v3, :cond_83
+
+    invoke-static {p0, v7}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
+
+    return v1
+
+    :cond_83
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->nextText()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-interface {p1, v3}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    :cond_8e
+    :goto_8e
+    goto :goto_a7
+
+    :cond_8f
+    if-ne v3, v7, :cond_8e
+
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v3
+
+    if-eqz v3, :cond_8e
+
+    invoke-static {p1}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->verifyCertificateChain(Ljava/util/List;)I
+
+    move-result v3
+
+    if-eqz v3, :cond_a5
+
+    invoke-static {p0, v3}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
+
+    return v1
+
+    :cond_a5
+    add-int/lit8 v6, v6, 0x1
+
+    :goto_a7
+    invoke-interface {v2}, Lorg/xmlpull/v1/XmlPullParser;->next()I
+
+    move-result v3
+
+    goto/16 :goto_20
+
+    :cond_ad
+    if-eqz v5, :cond_b3
+
+    if-ge v6, v8, :cond_b2
+
+    goto :goto_b3
+
+    :cond_b2
+    return v8
+
+    :cond_b3
+    :goto_b3
+    invoke-static {p0, v7}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
+    :try_end_b6
+    .catch Ljava/lang/Exception; {:try_start_5f .. :try_end_b6} :catch_b7
+
+    return v1
+
+    :catch_b7
+    move-exception p1
+
+    const-string v2, "KeyboxUtils"
+
+    const-string v3, "Exception: "
+
+    invoke-static {v2, v3, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    invoke-static {p0, v0}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
+
+    return v1
+.end method
+
+.method private static verifyCertificateChain(Ljava/util/List;)I
+    .locals 6
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/List<",
+            "Ljava/lang/String;",
+            ">;)I"
+        }
+    .end annotation
+
+    const/4 v0, 0x3
+
+    :try_start_1
+    invoke-interface {p0}, Ljava/util/List;->isEmpty()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_8
+
+    return v0
+
+    :cond_8
+
+    invoke-interface {p0}, Ljava/util/List;->size()I
+
+    move-result v1
+
+    add-int/lit8 v1, v1, -0x1
+
+    const/4 v2, -0x1
+
+    :goto_10
+    const/4 v3, 0x0
+
+    if-ltz v1, :cond_44
+
+    if-gez v2, :cond_44
+
+    invoke-interface {p0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Ljava/lang/String;
+
+    invoke-static {v4}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->parseCertificate(Ljava/lang/String;)Ljava/security/cert/X509Certificate;
+
+    move-result-object v4
+
+    invoke-virtual {v4}, Ljava/security/cert/X509Certificate;->getPublicKey()Ljava/security/PublicKey;
+
+    move-result-object v4
+
+    invoke-interface {v4}, Ljava/security/PublicKey;->getEncoded()[B
+
+    move-result-object v4
+
+    sget-object v5, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->GOOGLE_ROOT_PUBLIC_KEY:Ljava/lang/String;
+
+    invoke-static {v5, v3}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
+
+    move-result-object v5
+
+    invoke-static {v4, v5}, Ljava/util/Arrays;->equals([B[B)Z
+
+    move-result v5
+
+    if-nez v5, :cond_40
+
+    sget-object v5, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->GOOGLE_RKP_ROOT_PUBLIC_KEY:Ljava/lang/String;
+
+    invoke-static {v5, v3}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
+
+    move-result-object v3
+
+    invoke-static {v4, v3}, Ljava/util/Arrays;->equals([B[B)Z
+
+    move-result v3
+
+    if-nez v3, :cond_40
+
+    goto :goto_41
+
+    :cond_40
+    move v2, v1
+
+    :goto_41
+    add-int/lit8 v1, v1, -0x1
+
+    goto :goto_10
+
+    :cond_44
+    if-gez v2, :cond_48
+
+    const/4 p0, 0x4
+
+    return p0
+
+    :cond_48
+    move v1, v3
+
+    :goto_49
+    if-ge v1, v2, :cond_69
+
+    invoke-interface {p0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Ljava/lang/String;
+
+    invoke-static {v4}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->parseCertificate(Ljava/lang/String;)Ljava/security/cert/X509Certificate;
+
+    move-result-object v4
+
+    add-int/lit8 v1, v1, 0x1
+
+    invoke-interface {p0, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Ljava/lang/String;
+
+    invoke-static {v5}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->parseCertificate(Ljava/lang/String;)Ljava/security/cert/X509Certificate;
+
+    move-result-object v5
+
+    invoke-virtual {v5}, Ljava/security/cert/X509Certificate;->getPublicKey()Ljava/security/PublicKey;
+
+    move-result-object v5
+
+    invoke-virtual {v4, v5}, Ljava/security/cert/X509Certificate;->verify(Ljava/security/PublicKey;)V
+    :try_end_68
+    .catch Ljava/lang/Exception; {:try_start_1 .. :try_end_68} :catch_6a
+
+    goto :goto_49
+
+    :cond_69
+    return v3
+
+    :catch_6a
+    move-exception p0
+
+    const-string v1, "KeyboxUtils"
 
     const-string v2, "Exception: "
 
-    const-string v3, "KeyboxUtils"
+    invoke-static {v1, v2, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    new-instance v0, Ljava/util/ArrayList;
-
-    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
-
-    new-instance v4, Ljava/util/ArrayList;
-
-    invoke-direct {v4}, Ljava/util/ArrayList;-><init>()V
-
-    const/4 v5, 0x2
-
-    :try_start_0
-    invoke-static {}, Lorg/xmlpull/v1/XmlPullParserFactory;->newInstance()Lorg/xmlpull/v1/XmlPullParserFactory;
-
-    move-result-object v7
-
-    invoke-virtual {v7}, Lorg/xmlpull/v1/XmlPullParserFactory;->newPullParser()Lorg/xmlpull/v1/XmlPullParser;
-
-    move-result-object v7
-
-    new-instance v8, Ljava/io/StringReader;
-
-    move-object/from16 v9, p1
-
-    invoke-direct {v8, v9}, Ljava/io/StringReader;-><init>(Ljava/lang/String;)V
-
-    invoke-interface {v7, v8}, Lorg/xmlpull/v1/XmlPullParser;->setInput(Ljava/io/Reader;)V
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->next()I
-
-    move-result v8
-    :try_end_0
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_0 .. :try_end_0} :catch_2
-    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_2
-
-    const/4 v10, 0x0
-
-    const/4 v11, -0x1
-
-    const/4 v12, 0x0
-
-    const/4 v13, 0x0
-
-    const/4 v14, 0x0
-
-    const/4 v15, 0x0
-
-    const/16 v16, 0x0
-
-    :goto_0
-    const/4 v9, 0x1
-
-    if-eq v8, v9, :cond_a
-
-    const-string v9, "Key"
-
-    if-ne v8, v5, :cond_8
-
-    :try_start_1
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
-
-    move-result-object v8
-
-    invoke-virtual {v8}, Ljava/lang/String;->hashCode()I
-
-    move-result v18
-    :try_end_1
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_1 .. :try_end_1} :catch_2
-    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_2
-
-    const-string v5, "format"
-
-    const-string v6, "pem"
-
-    move/from16 v20, v12
-
-    const-string v12, "rsa"
-
-    move/from16 v21, v13
-
-    const-string v13, "ecdsa"
-
-    sparse-switch v18, :sswitch_data_0
-
-    goto :goto_1
-
-    :sswitch_0
-    :try_start_2
-    const-string v5, "NumberOfKeyboxes"
-
-    invoke-virtual {v8, v5}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->next()I
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getEventType()I
-
-    move-result v5
-    :try_end_2
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_2 .. :try_end_2} :catch_2
-    .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_2
-
-    const/4 v6, 0x4
-
-    if-ne v5, v6, :cond_0
-
-    :try_start_3
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getText()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/String;->trim()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-static {v5}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
-
-    move-result v5
-    :try_end_3
-    .catch Ljava/lang/NumberFormatException; {:try_start_3 .. :try_end_3} :catch_0
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_3 .. :try_end_3} :catch_2
-    .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_2
-
-    move v11, v5
-
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    goto/16 :goto_3
-
-    :catch_0
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    const/4 v11, -0x1
-
-    goto/16 :goto_3
-
-    :cond_0
-    :goto_1
-    const/4 v8, 0x0
-
-    goto/16 :goto_2
-
-    :sswitch_1
-    :try_start_4
-    const-string v9, "PrivateKey"
-
-    invoke-virtual {v8, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v8
-
-    if-eqz v8, :cond_0
-
-    const/4 v8, 0x0
-
-    invoke-interface {v7, v8, v5}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v6, v5}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-nez v5, :cond_1
-
-    return v16
-
-    :cond_1
-    invoke-virtual {v13, v10}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_2
-
-    move/from16 v12, v20
-
-    const/4 v8, 0x0
-
-    const/4 v13, 0x1
-
-    goto/16 :goto_3
-
-    :cond_2
-    invoke-virtual {v12, v10}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    const/4 v15, 0x1
-
-    goto/16 :goto_3
-
-    :sswitch_2
-    invoke-virtual {v8, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_0
-
-    const-string v5, "algorithm"
-
-    const/4 v8, 0x0
-
-    invoke-interface {v7, v8, v5}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v13, v5}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_3
-
-    move-object v10, v5
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    const/4 v12, 0x1
-
-    goto :goto_3
-
-    :cond_3
-    invoke-virtual {v12, v5}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v6
-
-    if-eqz v6, :cond_4
-
-    move-object v10, v5
-
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    const/4 v14, 0x1
-
-    goto :goto_3
-
-    :cond_4
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    const/4 v8, 0x0
-
-    const/4 v10, 0x0
-
-    goto :goto_3
-
-    :sswitch_3
-    const-string v9, "Certificate"
-
-    invoke-virtual {v8, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v8
-
-    if-eqz v8, :cond_0
-
-    const/4 v8, 0x0
-
-    invoke-interface {v7, v8, v5}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeValue(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v6, v5}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-nez v5, :cond_5
-
-    return v16
-
-    :cond_5
-    if-eqz v10, :cond_7
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->next()I
-
-    invoke-virtual {v13, v10}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_6
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getText()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/String;->trim()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v0, v5}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    goto :goto_2
-
-    :cond_6
-    invoke-virtual {v12, v10}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_7
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getText()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/String;->trim()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v4, v5}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
-
-    :cond_7
-    :goto_2
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    :goto_3
-    move-object/from16 v17, v8
-
-    goto :goto_4
-
-    :cond_8
-    move/from16 v20, v12
-
-    move/from16 v21, v13
-
-    const/4 v5, 0x3
-
-    const/16 v17, 0x0
-
-    if-ne v8, v5, :cond_9
-
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v9, v5}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v5
-
-    if-eqz v5, :cond_9
-
-    move-object/from16 v10, v17
-
-    :cond_9
-    move/from16 v12, v20
-
-    move/from16 v13, v21
-
-    :goto_4
-    invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->next()I
-
-    move-result v8
-    :try_end_4
-    .catch Lorg/xmlpull/v1/XmlPullParserException; {:try_start_4 .. :try_end_4} :catch_2
-    .catch Ljava/io/IOException; {:try_start_4 .. :try_end_4} :catch_2
-
-    const/4 v5, 0x2
-
-    goto/16 :goto_0
-
-    :cond_a
-    move v5, v9
-
-    move/from16 v20, v12
-
-    move/from16 v21, v13
-
-    if-ne v11, v5, :cond_10
-
-    if-eqz v20, :cond_10
-
-    if-eqz v21, :cond_10
-
-    if-eqz v14, :cond_10
-
-    if-nez v15, :cond_b
-
-    goto :goto_8
-
-    :cond_b
-    invoke-virtual {v0}, Ljava/util/ArrayList;->isEmpty()Z
-
-    move-result v5
-
-    if-nez v5, :cond_f
-
-    invoke-virtual {v4}, Ljava/util/ArrayList;->isEmpty()Z
-
-    move-result v5
-
-    if-eqz v5, :cond_c
-
-    goto :goto_7
-
-    :cond_c
-    const-string v5, "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAr7bHgiuxpwHsK7Qui8xUFmOr75gvMsd/dTEDDJdSSxtf6An7xyqpRR90PL2abxM1dEqlXnf2tqw1Ne4Xwl5jlRfdnJLmN0pTy/4lj4/7tv0Sk3iiKkypnEUtR6WfMgH0QZfKHM1+di+y9TFRtv6y//0rb+T+W8a9nsNL/ggjnar86461qO0rOs2cXjp3kOG1FEJ5MVmFmBGtnrKpa73XpXyTqRxB/M0n1n/W9nGqC4FSYa04T6N5RIZGBN2z2MT5IKGbFlbC8UrW0DxW7AYImQQcHtGl/m00QLVWutHQoVJYnFPlXTcHYvASLu+RhhsbDmxMgJJ0mcDpvsC4PjvB+TxywElgS70vE0XmLD+OJtvsBslHZvPBKCOdT0MS+tgSOIfga+z1Z1g7+DVagf7quvmag8jfPioyKvxnK/EgsTUVi2ghzq8wm27ud/mIM7AY2qEORR8Go3TVB4HzWQgpZrt3i5MIlCaY504LzSRiigHCzAPlHws+W0rB5N+er5/2pJKnfBSDiCiFAVtCLOZ7gLiMm0jhO2B6tUXHI/+MRPjy02i59lINMRRev56GKtcd9qO/0kUJWdZTdA2XoS82ixPvZtXQpUpuL12ab+9EaDK8Z4RHJYYfCT3Q5vNAXaiWQ+8PTWm2QgBR/bkwSWc+NpUFgNPN9PvQi8WEg5UmAGMCAwEAAQ=="
-
-    move/from16 v6, v16
-
-    invoke-static {v5, v6}, Landroid/util/Base64;->decode(Ljava/lang/String;I)[B
-
-    move-result-object v5
-
-    :try_start_5
-    invoke-virtual {v0}, Ljava/util/ArrayList;->getLast()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/String;
-
-    invoke-static {v0}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->parseCertificate(Ljava/lang/String;)Ljava/security/cert/X509Certificate;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/security/cert/X509Certificate;->getPublicKey()Ljava/security/PublicKey;
-
-    move-result-object v0
-
-    invoke-interface {v0}, Ljava/security/PublicKey;->getEncoded()[B
-
-    move-result-object v0
-
-    invoke-static {v0, v5}, Ljava/util/Arrays;->equals([B[B)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_e
-
-    invoke-virtual {v4}, Ljava/util/ArrayList;->getLast()Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Ljava/lang/String;
-
-    invoke-static {v0}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->parseCertificate(Ljava/lang/String;)Ljava/security/cert/X509Certificate;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/security/cert/X509Certificate;->getPublicKey()Ljava/security/PublicKey;
-
-    move-result-object v0
-
-    invoke-interface {v0}, Ljava/security/PublicKey;->getEncoded()[B
-
-    move-result-object v0
-
-    invoke-static {v0, v5}, Ljava/util/Arrays;->equals([B[B)Z
-
-    move-result v0
-
-    if-nez v0, :cond_d
-
-    goto :goto_5
-
-    :cond_d
-    const/16 v19, 0x1
-
-    return v19
-
-    :cond_e
-    :goto_5
-    const/4 v6, 0x4
-
-    invoke-static {v1, v6}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
-    :try_end_5
-    .catch Ljava/security/cert/CertificateException; {:try_start_5 .. :try_end_5} :catch_1
-    .catch Ljava/lang/IllegalArgumentException; {:try_start_5 .. :try_end_5} :catch_1
-
-    const/16 v16, 0x0
-
-    return v16
-
-    :catch_1
-    move-exception v0
-
-    invoke-static {v3, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
-
-    const/4 v5, 0x3
-
-    invoke-static {v1, v5}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
-
-    :goto_6
-    const/16 v16, 0x0
-
-    return v16
-
-    :cond_f
-    :goto_7
-    const/4 v5, 0x3
-
-    invoke-static {v1, v5}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
-
-    return v16
-
-    :cond_10
-    :goto_8
-    const/4 v5, 0x3
-
-    invoke-static {v1, v5}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
-
-    return v16
-
-    :catch_2
-    move-exception v0
-
-    invoke-static {v3, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
-
-    const/4 v2, 0x2
-
-    invoke-static {v1, v2}, Lio/mesalabs/unica/settings/keybox/KeyboxUtils;->showToast(Landroid/content/Context;I)V
-
-    goto :goto_6
-
-    :sswitch_data_0
-    .sparse-switch
-        -0x28371689 -> :sswitch_3
-        0x1263f -> :sswitch_2
-        0x6ff49fc -> :sswitch_1
-        0x340da7fa -> :sswitch_0
-    .end sparse-switch
+    return v0
 .end method
 
 .method private static verifyKeybox(Landroid/content/Context;)I
