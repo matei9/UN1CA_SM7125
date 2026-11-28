@@ -1,4 +1,4 @@
-KERNEL_REPO="https://github.com/UN1CA/kernel_samsung_sm7125/releases/latest/download"
+KERNEL_REPO="https://github.com/matei9/valeryn_samsung_sm7125/releases/latest/download"
 
 LOG "- Downloading Valeryn kernel"
 if [ -f "$WORK_DIR/kernel/boot.img" ]; then
